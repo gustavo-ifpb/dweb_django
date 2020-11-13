@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJMovies - Movies - {{ object.name }}</title>
+</head>
+<body>
+    <h1>{{ object.name }}</h1>
+    <p>{{ object.obs }}</p>
+    {% for cast in object.cast.all %}
+        {{ cast.name }} ({{ cast.actor.name }})<br/>
+    {% endfor %}
+</body>
+</html>
