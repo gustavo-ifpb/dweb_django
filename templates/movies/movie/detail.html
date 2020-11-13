@@ -1,15 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DJMovies - Movies - {{ object.name }}</title>
-</head>
-<body>
-    <h1>{{ object.name }}</h1>
-    <p>{{ object.obs }}</p>
-    {% for cast in object.cast.all %}
-        {{ cast.name }} ({{ cast.actor.name }})<br/>
-    {% endfor %}
-</body>
-</html>
+{% extends '../../base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+        <ol>
+            <li><a href="{% url 'movies-list' %}">Filmes</a></li>
+            <li>{{ object.name }}</li>
+        </ol>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<!-- ======= Features Section ======= -->
+<section id="features" class="features" data-aos="fade-up">
+    <div class="container">
+
+        <div class="section-title">
+            <h2>{{ object.name }}</h2>
+        </div>
+
+        <div class="row content">
+            <div class="col-md-5" data-aos="fade-right" data-aos-delay="100">
+                <img src="{{ object.detail.url }}" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-7 pt-4" data-aos="fade-left" data-aos-delay="100">
+                <h3>Detalhes</h3>
+                <p class="font-italic">
+                    {{ object.obs }}
+                </p>
+            </div>
+        </div>
+
+        <!-- ======= Team Section ======= -->
+        <section id="team" class="team">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>Personagens</h2>
+                </div>
+
+                <div class="row">
+                    {% for cast in object.cast.all %}
+                    <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="member">
+                            <img src="{{ cast.thumbnail.url }}" class="img-fluid" alt="">
+                            <div class="member-info">
+                                <div class="member-info-content">
+                                    <h4>{{ cast.name }}</h4>
+                                    <span>{{ cast.actor.name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </section><!-- End Team Section -->
+    </div>
+</section><!-- End Features Section -->
+{% endblock %}

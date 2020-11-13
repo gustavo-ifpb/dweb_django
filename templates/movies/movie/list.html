@@ -2,50 +2,60 @@
 {% load static %}
 
 {% block content %}
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
-        <div class="container" data-aos="fade-up">
-  
-          <div class="section-title">
-            <h2>Filmes</h2>
-          </div>
-  
-          <div class="row">
-            <div class="col-lg-12 d-flex justify-content-center">
-              <ul id="portfolio-flters">
-                <li data-filter="*" class="filter-active">All</li>
-                {% for category in categories %}
-                <li data-filter=".filter-{{ category.pk }}">{{ category.name }}</li>
-                {% endfor %}
-              </ul>
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<!-- ======= Portfolio Section ======= -->
+<section id="movies" class="portfolio">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+      <h2>Filmes</h2>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 d-flex justify-content-center">
+        <ul id="portfolio-flters">
+          <li data-filter="*" class="filter-active">All</li>
+          {% for category in categories %}
+          <li data-filter=".filter-{{ category.pk }}">{{ category.name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="row portfolio-container">
+
+      {% for movie in object_list %}
+      <div
+        class="col-lg-4 col-md-6 portfolio-item {% for category in movie.category.all %}filter-{{ category.pk }} {% endfor %}">
+        <div class="portfolio-wrap">
+          <img src="{{ movie.thumbnail.url }}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            <a href="{% url 'movies-detail' movie.pk %}" title="More Details">
+              <h4>{{ movie.name }}</h4>
+            </a>
+            <p>
+              {% for category in movie.category.all %}
+              {{ category.name }}
+              {% endfor %}
+            </p>
+            <div class="portfolio-links">
+              <a href="{{ movie.photo.url }}" data-gall="portfolioGallery" class="venobox"
+                title="{{ movie.name }}"><i class="bx bx-plus"></i></a>
+              <a href="{% url 'movies-detail' movie.pk %}" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>
-  
-          <div class="row portfolio-container">
-            
-            {% for movie in object_list %}
-            <div class="col-lg-4 col-md-6 portfolio-item {% for category in movie.category.all %}filter-{{ category.pk }} {% endfor %}">
-              <div class="portfolio-wrap">
-                <img src="{% static 'img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>{{ movie.name }}</h4>
-                  <p>
-                    {% for category in movie.category.all %}
-                      {{ category.name }}
-                    {% endfor %}
-                  </p>
-                  <div class="portfolio-links">
-                    <a href="{% static 'img/portfolio/portfolio-1.jpg' %}" data-gall="portfolioGallery" class="venobox" title="{{ movie.name }}"><i class="bx bx-plus"></i></a>
-                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-  
-  
-          </div>
-  
         </div>
-      </section><!-- End Portfolio Section -->
-{% endblock %} 
+      </div>
+      {% endfor %}
+
+
+    </div>
+
+  </div>
+</section><!-- End Portfolio Section -->
+{% endblock %}

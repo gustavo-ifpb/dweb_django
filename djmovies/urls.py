@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from movies import views
 
@@ -28,4 +30,4 @@ urlpatterns = [
     path('movies/create/', views.MovieCreateView.as_view(), name='movies-create'),
     path('movies/<int:pk>/update/', views.MovieUpdateView.as_view(), name='movies-update'),
     path('movies/<int:pk>/delete/', views.MovieDeleteView.as_view(), name='movies-delete'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
