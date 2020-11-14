@@ -18,16 +18,21 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.contrib.auth import views as auth_views
+
 from movies import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('login/', auth_views.LoginView.as_view(template_name='users/signin.html'), name='users-signin'),
+    path('logout/', auth_views.LogoutView.as_view(), name='users-signout'),
     
     path('categories/', views.CategoryListView.as_view(), name='categories-list'),
     
-    path('movies/', views.MovieListView.as_view(), name='movies-list'),
     path('movies/<int:pk>/', views.MovieDetailView.as_view(), name='movies-detail'),
     path('movies/create/', views.MovieCreateView.as_view(), name='movies-create'),
     path('movies/<int:pk>/update/', views.MovieUpdateView.as_view(), name='movies-update'),
     path('movies/<int:pk>/delete/', views.MovieDeleteView.as_view(), name='movies-delete'),
+    path('', views.MovieListView.as_view(), name='movies-list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

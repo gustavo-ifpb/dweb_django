@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from . import models
 
@@ -33,10 +34,10 @@ class MovieDetailView(DetailView):
     template_name = 'movies/movie/detail.html'
 
 
-class MovieCreateView(CreateView):
+class MovieCreateView(LoginRequiredMixin, CreateView):
 
     model = models.Movie
-    fields = ('name', 'status', 'obs', 'category')
+    fields = ('name', 'status', 'obs', 'category', 'photo')
     template_name = 'movies/movie/form.html'
     success_url = reverse_lazy('movies-list')
 

@@ -1,4 +1,4 @@
-{% extends '../../base.html' %}
+{% extends '../base.html' %}
 {% load static %}
 {% load widget_tweaks %}
 
@@ -6,18 +6,6 @@
 <!-- ======= Breadcrumbs ======= -->
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
-
-        <ol>
-            <li><a href="{% url 'movies-list' %}">Filmes</a></li>
-            <li>
-            {% if object %}
-                Editar: {{ object.name }}
-            {% else %}
-                Novo filme
-            {% endif %}
-            </li>
-        </ol>
-
     </div>
 </section><!-- End Breadcrumbs -->
 
@@ -26,44 +14,22 @@
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2>
-            {% if object %}
-                Editar: {{ object.name }}
-            {% else %}
-                Novo filme
-            {% endif %}
-            </h2>
+            <h2>Entrar</h2>
         </div>
 
         <div class="row">
-            <div class="col-lg-6 mt-4 mt-md-0 offset-md-3">
+            <div class="col-lg-4 mt-4 mt-md-0 offset-md-4">
                 <form method="post" action="{% url 'users-signin' %}">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-md-12 form-group">
-                            {{ form.name.label_tag }}
-                            {{ form.name|add_class:'form-control'|append_attr:'placeholder:Username'|append_attr:'data-rule:"minlen:4"' }}
+                            {{ form.username|add_class:'form-control'|append_attr:'placeholder:Username'|append_attr:'data-rule:"minlen:4"' }}
                             <div class="validate"></div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-12 form-group">
-                            {{ form.obs.label_tag }}
-                            {{ form.obs|add_class:'form-control'|append_attr:'placeholder:Username'|append_attr:'data-rule:"minlen:4"' }}
-                            <div class="validate"></div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-12 form-group">
-                            {{ form.category.label_tag }}
-                            {{ form.category|add_class:'form-control' }}
-                            <div class="validate"></div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-12 form-group">
-                            {{ form.photo.label_tag }}
-                            {{ form.photo|add_class:'form-control' }}
+                            {{ form.password|add_class:'form-control'|append_attr:'placeholder:Senha'|append_attr:'data-rule:"minlen:4"' }}
                             <div class="validate"></div>
                         </div>
                     </div>
@@ -83,9 +49,8 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <input type="submit" value="Salvar">
+                        <input type="submit" value="login">
                         <input type="hidden" name="next" value="{{ next }}">
-                        <input type="hidden" name="status" value="1">
                     </div>
                 </form>
             </div>
