@@ -1,0 +1,90 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<!-- ======= Contact Section ======= -->
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Entrar</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 mt-4 mt-md-0 offset-md-4">
+                <form method="post" action="{% url 'users-signup' %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            {{ form.first_name|add_class:'form-control'|append_attr:'placeholder:Nome'|append_attr:'data-rule:"minlen:4"' }}
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            {{ form.last_name|add_class:'form-control'|append_attr:'placeholder:Sobrenome'|append_attr:'data-rule:"minlen:4"' }}
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            <select name="groups" class="form-control">
+                                {% for group in groups %}
+                                <option value="{{ group.pk }}">{{ group.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            {{ form.username|add_class:'form-control'|append_attr:'placeholder:Username'|append_attr:'data-rule:"minlen:4"' }}
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            {{ form.password1|add_class:'form-control'|append_attr:'placeholder:Senha'|append_attr:'data-rule:"minlen:4"' }}
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 form-group">
+                            {{ form.password2|add_class:'form-control'|append_attr:'placeholder:Repita senha'|append_attr:'data-rule:"minlen:4"' }}
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="error-message">
+                            {% if form.errors %}
+                                Your username and password didn't match. Please try again.
+                            {% endif %}
+
+                            {% if next %}
+                                {% if user.is_authenticated %}
+                                    Your account doesn't have access to this page. To proceed, please login with an account that has access.
+                                {% else %}
+                                    Please login to see this page.
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" value="Salvar">
+                        <input type="hidden" name="next" value="{{ next }}">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Contact Section -->
+{% endblock %}

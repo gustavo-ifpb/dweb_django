@@ -3,8 +3,23 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User, Group
 
-from . import models
+from . import models, forms
+
+class UserCreateView(CreateView):
+
+    form_class = forms.UserForm
+    template_name = 'users/form.html'
+    success_url = reverse_lazy('movies-list')
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['groups'] = Group.objects.all()
+        return context
 
 
 class CategoryListView(ListView):
