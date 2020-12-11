@@ -1,12 +1,23 @@
+from django.conf import settings
 from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, resolve_url
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.views import LoginView
 
 from . import models, forms
+
+class UserLoginView(LoginView):
+
+    def get_success_url(self):
+        url = self.get_redirect_url()
+        if self.request.user.groups.first().name == 'Administrador':
+            return url or resolve_url(settings.LOGIN_REDIRECT_URL)
+        else:
+            return reverse_lazy('categories-list')
 
 class UserCreateView(CreateView):
 
